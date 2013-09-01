@@ -1,0 +1,7 @@
+# Vext2D.mak - makefile for VxD Vext2D
+
+DEBUG = 1
+PRJ_FLAGS = -DFULL_DEBUG
+
+
+!include ..\makefile

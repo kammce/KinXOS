@@ -1,0 +1,54 @@
+#set up actual file 98.4 Mbs on file and 104 Mbs on mount
+dd if=/dev/zero of=/home/khalil/Documents/OS/MyOS/file_system.img bs=516096c count=400
+fdisk -u -C400 -S63 -H16 /home/khalil/Documents/OS/MyOS/file_system.img
+#run these commands;
+o - Create a new empty DOS partition table.
+n - Create a new partition (For simplicity just make 1 primary partition covering the whole disk).
+a - Toggle the bootable flag (Optional).
+p - Print the partition table.
+#   sector start: 63      blocks: 201568+ or 201568   
+
+#puts file_system.img into the loop0 device
+losetup -o32256 /dev/loop0 /home/khalil/Documents/OS/MyOS/file_system.img
+
+#format the disk as ext2
+mke2fs -b1024 /dev/loop0 201568
+
+#mount the disk as khalil (or who ever is the 1000 id)
+sudo mount -t ext2 -o uid=1000,gid=1000 /dev/loop0 /home/khalil/Documents/OS/MyOS/file_system_area
+
+#unmount and remove:
+
+umount /dev/loop0
+losetup -d /dev/loop0
+
+
+#use these after set up!
+sudo mount -t ext2 -oloop=/dev/loop0,offset=32256 /home/khalil/Documents/OS/MyOS/file_system.img /home/khalil/Documents/OS/MyOS/file_system_area
+sudo chown khalil:khalil file_system_area
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#making a new bootsector (have not used yet) Not sure yet wo/ "conv=notrunc" the whole file becomes 512/446
+dd if=stage1 of=/home/khalil/Documents/OS/MyOS/file_system.img bs=512 count=1 conv=notrunc
+dd if=stage1 of=/home/khalil/Documents/OS/MyOS/file_system.img bs=446 count=1 conv=notrunc
+
+#Another example of making a bootsector:
+grub-install --no-floppy --grub-mkdevicemap=/home/khalil/Documents/OS/MyOS/file_system_area/boot/grub/device.map --root-directory=/home/khalil/Documents/OS/MyOS/file_system_area /dev/loop0

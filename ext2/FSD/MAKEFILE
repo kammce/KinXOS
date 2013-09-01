@@ -1,0 +1,55 @@
+# Vext2D.mak - makefile for VxD Vext2D
+
+#
+# These three variables are the top level defines
+#
+WIN_DIR = e:\win95
+MSDEV = E:\msdev
+TOP_PROJECT = D:\PROJECTS\FSDEXT2
+
+
+SHARED = $(TOP_PROJECT)\SHARED
+SOURCEPATH = $(TOP_PROJECT)\FSD
+DEVICENAME = vext2d
+DYNAMIC = 1
+FRAMEWORK = C
+OBJECTS = 	blkdev.obj block.obj cache.obj dir.obj\
+		ext2fs.obj file.obj fsdfile.obj\
+		fsdmount.obj fsdvol.obj inode.obj parttbl.obj\
+		partwalk.obj super.obj util.obj vxd.obj\
+		vxddebug.obj
+
+XFLAGS = -I$(VTOOLSD)\include -I$(MSDEV)\INCLUDE -W3 -I$(TOP_PROJECT) -I$(SOURCEPATH) -DFSD $(PRJ_FLAGS)
+
+!include $(VTOOLSD)\include\vtoolsd.mak
+!include $(VTOOLSD)\include\vxdtarg.mak
+
+#
+# These three source files are shared with the TSD project.
+# All other sources are in $(SOURCEPATH)
+#
+
+blkdev.obj:	$(SHARED)\blkdev.c
+	set INCLUDE=$(SOURCEINCPATH);$(INCLUDEVXD)
+	set CL= $(CFLAGS) -Fo$@
+	$(C32) $?
+	$(EDITBIN) @$(VTOOLSD)\include\ebin.cmd $@ $(COMPILEFILTER)
+
+vxddebug.obj:	$(SHARED)\vxddebug.c
+	set INCLUDE=$(SOURCEINCPATH);$(INCLUDEVXD)
+	set CL= $(CFLAGS) -Fo$@
+	$(C32) $?
+	$(EDITBIN) @$(VTOOLSD)\include\ebin.cmd $@ $(COMPILEFILTER)
+
+partwalk.obj:	$(SHARED)\partwalk.c
+	set INCLUDE=$(SOURCEINCPATH);$(INCLUDEVXD)
+	set CL= $(CFLAGS) -Fo$@
+	$(C32) $?
+	$(EDITBIN) @$(VTOOLSD)\include\ebin.cmd $@ $(COMPILEFILTER)
+
+vxd.obj: $(SOURCEPATH)\vxd.c $(SHARED)\e2version.h
+
+install:
+	copy $(DEVICENAME).vxd $(WIN_DIR)\system
+
+

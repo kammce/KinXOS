@@ -1,0 +1,43 @@
+
+#
+# These three variables are the top level defines
+#
+WIN_DIR = e:\win95
+MSDEV = E:\msdev
+TOP_PROJECT = D:\PROJECTS\FSDEXT2
+
+SHARED = $(TOP_PROJECT)\SHARED
+SOURCEPATH = $(TOP_PROJECT)\TSD
+DEVICENAME = TSDEXT2
+DYNAMIC = 1
+FRAMEWORK = C
+
+OBJECTS = blkdev.OBJ partwalk.obj tsd.obj vxd.obj vxddebug.obj 
+
+XFLAGS = -I$(VTOOLSD)\include -I$(MSDEV)\INCLUDE -W3 -I$(TOP_PROJECT) -I$(SOURCEPATH) -DTSD $(PRJ_FLAGS)
+
+!include $(VTOOLSD)\include\vtoolsd.mak
+!include $(VTOOLSD)\include\vxdtarg.mak
+
+
+blkdev.obj:	$(SHARED)\blkdev.c
+	set INCLUDE=$(SOURCEINCPATH);$(INCLUDEVXD)
+	set CL= $(CFLAGS) -Fo$@
+	$(C32) $?
+	$(EDITBIN) @$(VTOOLSD)\include\ebin.cmd $@ $(COMPILEFILTER)
+
+vxddebug.obj:	$(SHARED)\vxddebug.c
+	set INCLUDE=$(SOURCEINCPATH);$(INCLUDEVXD)
+	set CL= $(CFLAGS) -Fo$@
+	$(C32) $?
+	$(EDITBIN) @$(VTOOLSD)\include\ebin.cmd $@ $(COMPILEFILTER)
+
+partwalk.obj:	$(SHARED)\partwalk.c
+	set INCLUDE=$(SOURCEINCPATH);$(INCLUDEVXD)
+	set CL= $(CFLAGS) -Fo$@
+	$(C32) $?
+	$(EDITBIN) @$(VTOOLSD)\include\ebin.cmd $@ $(COMPILEFILTER)
+
+install:
+	copy $(DEVICENAME).vxd $(WIN_DIR)\system\iosubsys
+

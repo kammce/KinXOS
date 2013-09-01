@@ -1,0 +1,13 @@
+#  default - boot the first entry.
+default 0
+
+# if have problem - boot the second entry.
+fallback 1
+
+# after 30 sec boot default.
+timeout 30
+
+# Entry 0:
+title   KinX OS
+root    (fd0)
+kernel  /boot/kernel.elf
