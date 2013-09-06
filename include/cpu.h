@@ -9,7 +9,7 @@
 #define		I86_PIC_IRQ_PARALLEL2	5
 #define		I86_PIC_IRQ_DISKETTE	6
 #define		I86_PIC_IRQ_PARALLEL1	7
- 
+
 //! The following devices use PIC 2 to generate interrupts
 #define		I86_PIC_IRQ_CMOSTIMER	0
 #define		I86_PIC_IRQ_CGARETRACE	1

@@ -35,12 +35,12 @@ extern void buffer_stack(unsigned char add);
 /* ECHO */
 extern void echo (unsigned char * c1);
 extern void output_ram();
+extern void output_stats();
 
 /* DATE.C */
 extern void display_time ();
 
-/* MATH.C */
+/* MEVAL.C */
 extern void do_math (unsigned char * expression);
-extern void puti(int c);
 
 #endif

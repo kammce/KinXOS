@@ -19,6 +19,7 @@ uint8_t date_cmd  [] = "date";
 uint8_t clear_cmd [] = "clear";
 uint8_t cursor_cmd[] = "cursor";
 uint8_t ram_cmd[] = "ram";
+uint8_t stats_cmd[] = "stats";
 uint8_t reboot_cmd[] = "reboot";
 uint8_t shutdown_cmd[] = "shutdown";
 
@@ -113,16 +114,13 @@ void kin_dos_install()
 	puts("                          [*] ... loading ... [*] \n");
     alter_xy(30,10);
     move_csr();
-	waits(2);
+	//waits(2);
     create_titlebar (0x20);
     create_actionbar(0x40);
     write_titlebar  ("                             [Welcome to KinX OS]", 0x20);
     write_actionbar  ("", 0x20);
     settextcolor(ATTRIBFONT(WHITE,BLACK));
 	ClearShell();
-	puts(" ____________________________________________  \n");
-	puts("|    \\____Welcome to                        | \n");
-	puts("|___________________\\KinX Operating System__| \n");
 	puts("\n");
 	puts("KinX Documentation @ http://www.kammcecorp.net/#body/projects.html \n");
 	puts("KinX Version: 0.01 CONTRUCTION\n\n");
@@ -139,7 +137,7 @@ void buffer_stack(unsigned char add) {
 	}
 	else if (add == 0x08 && (command_buffer_count <= 0)) {
 		command_buffer_count = 0;
-		command_buffer[0] = ' '; 
+		command_buffer[0] = ' ';
 		command_buffer[1] = '\0';
 	} else {
 		command_buffer[command_buffer_count] = add;
@@ -148,7 +146,7 @@ void buffer_stack(unsigned char add) {
 	}
 }
 void activate_cmd() {
-	buffer_stack('\0'); // make sure the last character in the command_buffer is 
+	buffer_stack('\0'); // make sure the last character in the command_buffer is
 	// 0 =  surpassing leading spaces
 	// 1 =  getting process name
 	// 2 >= getting arguments
@@ -185,14 +183,16 @@ void activate_cmd() {
 			puts("\ncursor - display cursor location");
 			puts("\nclear  - clear screen");
 			puts("\nram    - ????????????");
+			puts("\nstats  - ????????????");
 			puts("\nreboot - reboot computer");
 		}
-		else if(strcompare(shell_command,hello_cmd) == TRUE) { puts("Hello! This is KinX's First Command. Thank you for using it!"); }
+		else if(strcompare(shell_command,hello_cmd) == TRUE) { printf("Hello! This is KinX's First Command. Thank you for using it!"); }
 		else if(strcompare(shell_command,echo_cmd) == TRUE)  { echo(shell_args); }
 		else if(strcompare(shell_command,date_cmd) == TRUE)  { display_time(); }
 		else if(strcompare(shell_command,clear_cmd) == TRUE) { ClearShell(); }
 		else if(strcompare(shell_command,cursor_cmd) == TRUE){ display_cursor_loc(); }
 		else if(strcompare(shell_command,ram_cmd) == TRUE)   { output_ram(); }
+		else if(strcompare(shell_command,stats_cmd) == TRUE)   { output_stats(); }
 		else if(strcompare(shell_command,reboot_cmd) == TRUE){ reboot(); }
 		//else if(strcompare(shell_command,shutdown_cmd) == TRUE){ acpiPowerOff(); }
 		else { settextcolor(0x40); puts("That command does not exist."); }

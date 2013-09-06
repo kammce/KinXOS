@@ -2,13 +2,13 @@
 
 global loader                           ; making entry point visible to linker
 global MULTIBOOT
- 
+
 extern kmain                            ; kmain is defined in kmain.cpp
- 
+
 ; setting up the Multiboot header - see GRUB docs for details
 MODULEALIGN equ  1<<0                   ; align loaded modules on page boundaries
-MEMINFO     equ  1<<1                   ; provide memory map
-VIDEO       equ  1<<2                   ; provide memory map
+MEMINFO     equ  0<<1                   ; provide memory map
+VIDEO       equ  0<<2                   ; provide memory map
 TEST1       equ  1<<16                   ; provide memory map
 FLAGS       equ  MODULEALIGN | MEMINFO | VIDEO | TEST1  ; this is the Multiboot 'flag' field
 MAGIC         equ    0x1BADB002           ; 'magic number' lets bootloader find the header
@@ -22,34 +22,36 @@ MODE_TYPE     equ  1
 WIDTH         equ  100
 HEIGHT        equ  50
 DEPTH         equ  2
- 
+
 [SECTION .text]
 
 align 4
     dd MAGIC
     dd FLAGS
     dd CHECKSUM
-    dd HEADER_ADDR  
-    dd LOAD_ADDR    
-    dd LOAD_END_ADDR
-    dd BSS_END_ADDR 
-    dd ENTRY_ADDR   
-    dd MODE_TYPE    
-    dd WIDTH        
-    dd HEIGHT       
-    dd DEPTH     
+    ; dd HEADER_ADDR
+    ; dd LOAD_ADDR
+    ; dd LOAD_END_ADDR
+    ; dd BSS_END_ADDR
+    ; dd ENTRY_ADDR
+    ; dd MODE_TYPE
+    ; dd WIDTH
+    ; dd HEIGHT
+    ; dd DEPTH
 
 ;global MULTIBOOT_INFO_STRUCTURE
 ;MULTIBOOT_INFO_STRUCTURE dd 0
 ; reserve initial kernel stack space
 STACKSIZE equ 0x4000                    ; that's 16k.
- 
+
 loader:
     mov  esp, stack + STACKSIZE         ; set up the stack
-
-    push eax                            ; Multiboot magic number
+    ; Reset EFLAGS.
+    pushl   $0
+    popf
     ;mov  [MULTIBOOT_INFO_STRUCTURE], ebx
     push ebx                            ; Multiboot info structure
+    push eax                            ; Multiboot magic number
 
 	jmp loop_kernel
 

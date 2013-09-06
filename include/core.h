@@ -5,6 +5,8 @@
 
 /* This defines the data types available in the KinX Kernel */
 
+#define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
+
 typedef int size_t;
 
 typedef enum { false, true } boolean;
@@ -39,40 +41,8 @@ struct regs
     unsigned int gs, fs, es, ds;
     unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
     unsigned int int_no, err_code;
-    unsigned int eip, cs, eflags, useresp, ss;    
+    unsigned int eip, cs, eflags, useresp, ss;
 };
-
-/* PHYS_MEMORY.C */
-struct MULTIBOOT_INFO {
-    uint32_t flags;         //required
-    uint32_t memoryLo;      //if bit 0 in flags are set
-    uint32_t memoryHi;      //if bit 0 in flags are set
-    uint32_t bootDevice;        //if bit 1 in flags are set
-    uint32_t commandLine;       //if bit 2 in flags are set
-    uint32_t moduleCount;       //if bit 3 in flags are set
-    uint32_t moduleAddress;     //if bit 3 in flags are set
-    uint32_t syms[4];       //if bits 4 or 5 in flags are set
-    uint32_t memMapLength;      //if bit 6 in flags is set
-    uint32_t memMapAddress;     //if bit 6 in flags is set
-    uint32_t drivesLength;      //if bit 7 in flags is set
-    uint32_t drivesAddress;     //if bit 7 in flags is set
-    uint32_t configTable;       //if bit 8 in flags is set
-    uint32_t apmTable;      //if bit 9 in flags is set
-    uint32_t vbeControlInfo;    //if bit 10 in flags is set
-    uint32_t vbeModeInfo;       //if bit 11 in flags is set
-    uint32_t vbeMode;       // all vbe_* set if bit 12 in flags are set
-    uint32_t vbeInterfaceSeg;
-    uint32_t vbeInterfaceOff;
-    uint32_t vbeInterfaceLength;
-};
-extern struct MULTIBOOT_INFO *MULTIBOOT_INFO_STRUCTURE;
-extern int memory_size;
-extern void physical_memory_manager_install();
-/* MEMORY.C */
-extern void *memcpy(void *dest, const void *src, size_t count);
-extern void *memset(void *dest, char val, size_t count);
-unsigned char *memsetb(void *dest, char val, size_t count);
-extern unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count);
 
 /* GDT.C */
 extern void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
@@ -124,5 +94,6 @@ extern void keyboard_install();
 
 /* KERNEL.C */
 extern kmain();
+
 
 #endif

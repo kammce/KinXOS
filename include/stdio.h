@@ -5,7 +5,7 @@
 
 // Character String set of MACROs
 extern char _ctype[];
- 
+
 #define CT_UP	0x01	/* upper case */
 #define CT_LOW	0x02	/* lower case */
 #define CT_DIG	0x04	/* digit */
@@ -14,7 +14,7 @@ extern char _ctype[];
 #define CT_WHT	0x20	/* white space (space/cr/lf/tab) */
 #define CT_HEX	0x40	/* hex digit */
 #define CT_SP	0x80	/* hard space (0x20) */
- 
+
 #define isalnum(c)	((_ctype + 1)[(unsigned)(c)] & (CT_UP | CT_LOW | CT_DIG))
 #define isalpha(c)	((_ctype + 1)[(unsigned)(c)] & (CT_UP | CT_LOW))
 #define iscntrl(c)	((_ctype + 1)[(unsigned)(c)] & (CT_CTL))
@@ -34,5 +34,6 @@ extern char _ctype[];
 
 extern int strlen(const char *str);
 extern boolean strcompare (unsigned char * c1, unsigned char * c2);
-
+extern void itoa(char *_str, int num );
+extern void itoa2 (char *buf, int base, int d);
 #endif

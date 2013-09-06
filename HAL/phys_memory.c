@@ -1,11 +1,12 @@
 /*  Desc: */
 
+#include <multiboot.h>
 #include <core.h>
+#include <memory.h>
 
-struct MULTIBOOT_INFO *MULTIBOOT_INFO_STRUCTURE;
-int memory_size = 1024; 
-/* This is a global that exists in the loader.asm file */
-void physical_memory_manager_install(struct MULTIBOOT_INFO *info) {
-	MULTIBOOT_INFO_STRUCTURE = info;
-	memory_size = 1024 + MULTIBOOT_INFO_STRUCTURE->memoryLo + MULTIBOOT_INFO_STRUCTURE->memoryHi*64;
+multiboot_info_t *mbi;
+/* This is a global that exists in the loader.asm file  */
+void physical_memory_manager_install(multiboot_info_t *MULTIBOOT_INFO_STRUCTURE) {
+  mbi = MULTIBOOT_INFO_STRUCTURE;
+  //memory_size = 1024 + mbi->mem_lower + mbi->mem_upper*64;
 }
