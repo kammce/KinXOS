@@ -64,8 +64,7 @@ void bufferStack(uint8_t add) {
 		putch(0x08);
 	} else if (add == 0x08 && (shell.cmdpos <= 0)) {
 		shell.cmdpos = 0;
-		shell.cmdbuffer[0] = ' ';
-		shell.cmdbuffer[1] = '\0';
+		shell.cmdbuffer[0] = '\0';
 	} else {
 		shell.cmdbuffer[shell.cmdpos] = add;
 		putch(global_keyboard_char);
@@ -102,23 +101,19 @@ void activateCMD() {
 	strcat(buff, "]");
 	strcat(buff, shell.argv[0]);
 	write_actionbar(buff, 0x40);
-
+	boolean exec_flag = false;
 	if(shell.argc != 0) {
 		for(_ecx0 = 0; kernel_cmds[_ecx0].sig[0] != 0; _ecx0++) {
 			if(strcmp(shell.argv[0], kernel_cmds[_ecx0].sig)) {
 				kernel_cmds[_ecx0].method(shell.argc, shell.argv);
+				exec_flag = true;
 				break;
 			}
 		}
 	}
-	int i;
-	//reset command and shell commands and re-state prompt
-	//memclr(shell.cmdbuffer, shell.cmdpos);
-	//memclr(shell.cmdbuffer, shell.cmdpos);
-	//memclr(shell.cmdbuffer, shell.cmdpos);
-	/*for (i = 0; i < shell.cmdpos; i++) { shell.cmdbuffer = NULLCHAR; }
-	for (i = 0; i < shell.cmdpos; i++) { shell_command[i] = NULLCHAR; }
-	for (i = 0; i < shell.cmdpos; i++) { shell_args[i] = NULLCHAR; }*/
+	if(!exec_flag) {
+		kernel_cmds[0].method(shell.argc, shell.argv);
+	}
 	shell.cmdpos = 0;
 	shell.cmdbuffer[0] = 0;
 	promptLine();

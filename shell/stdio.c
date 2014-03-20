@@ -123,3 +123,44 @@ char * strcat(char dest[], char src[]) {
 	*dest = 0;
 	return dest;
 }
+/* Format a string and copy it to a character array. */
+char * sprintf (char buffer[], const char *format, ...)
+{
+	char start = buffer;
+	char **arg = (char **) &format; //is the pointer to all of the arguments
+	int c;
+	char buf[20];
+	arg++;
+	while ((c = *format++) != 0) { //c will point to the first string argument
+		if (c != '%') {
+			*buffer++ = c;
+		} else {
+			char *p;
+			c = *format++;
+			switch (c)
+			{
+			case 'd':
+			case 'u':
+			case 'x':
+			  itoa2 (buf, *((int *) arg++), c); //point to the next item on the list, after, inc
+			  p = buf;
+			  goto string;
+			  break;
+			case 's':
+			  p = *arg++;
+			  if (! p)
+				 p = "(null)";
+
+			string:
+			  while (*p)
+				 *buffer++ = *p++;
+			  break;
+
+			default:
+				 *buffer++ = *arg++;
+			  break;
+			}
+		}
+	}
+	return buffer;
+}
