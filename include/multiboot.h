@@ -96,5 +96,9 @@ typedef struct memory_map
 	 unsigned long type;
 } memory_map_t;
 
+/* PHYS_MEMORY.C */
+extern multiboot_info_t *mbi;
+extern void physical_memory_manager_install();
+
 #endif /* ! ASM */
 

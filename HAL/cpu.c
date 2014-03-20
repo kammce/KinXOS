@@ -1,12 +1,8 @@
 #include <cpu.h>
 #include <core.h>
 
-int counter_0;
-int counter_1;
-int counter_2;
-int counter_3;
-int counter_4;
-int counter_5;
+int counter_0, counter_1, counter_2, counter_3, counter_4, counter_5;
+int _ecx0, _ecx1, _ecx2, _ecx3, _ecx4, _ecx5;
 
 unsigned char inportb (unsigned short _port)
 {

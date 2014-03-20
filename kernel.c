@@ -11,24 +11,44 @@
 
 kmain(unsigned long magic, unsigned long info) //like normal main in C programs
 {
-    /*if (magic != MULTIBOOT_BOOTLOADER_MAGIC)
-         {
-           printf ("Invalid magic number: 0x%x\n", (unsigned) magic);
-           return;
-         }*/
+	/*if (magic != MULTIBOOT_BOOTLOADER_MAGIC)
+		 {
+		   puts ("Invalid magic number: 0x%x\n", (unsigned) magic);
+		   return;
+		 }*/
 
-    /* Set MBI to the address of the Multiboot information structure. */
-    //mbi = (multiboot_info_t *) info;
-    gdt_install();
-    idt_install();
-    isrs_install();
-    irq_install();
-    physical_memory_manager_install(info);
-    init_video();
-    timer_install();
-    keyboard_install();
-	enableInts();
-	kin_dos_install();
+	/* Set MBI to the address of the Multiboot information structure. */
+	//mbi = (multiboot_info_t *) info;
+	init_video();
+	ClearScreen();
+	putch('\n');
+	puts("Initiating video [DONE]\n");
+	puts("Installing Global Descriptor Table");
+		gdt_install();
+			puts(" [DONE]\n");
+	puts("Installing Interrupt Descriptor Table");
+		idt_install();
+			puts(" [DONE]\n");
+	puts("Installing Interrupt Service Routines");
+		isrs_install();
+			puts(" [DONE]\n");
+	puts("Installing Interrupt Vector Table");
+		irq_install();
+			puts(" [DONE]\n");
+	puts("Installing Physical Memory Manager");
+		physical_memory_manager_install(info);
+			puts(" [DONE]\n");
+	puts("Installing Timer Driver");
+		timer_install();
+			puts(" [DONE]\n");
+	puts("Installing Keyboard Driver");
+		keyboard_install();
+			puts(" [DONE]\n");
+	puts("Enabling Interrupts");
+		enableInts();
+			puts(" [DONE]\n");
+	puts("Starting KinDOS\n");
+		kinDOSInstall();
 
 	while (1) { hlt(); }
 };

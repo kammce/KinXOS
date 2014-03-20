@@ -25,6 +25,7 @@ void timer_handler(struct regs *r)
 	/* Every 18 clocks (approximately 1 second), we will
 	*  display a message on the screen */
 	if (timer_ticks % 18 == 0) { second_epoc++; }
+	if (timer_ticks % 18 == 0) { second_epoc++; }
 	if (second_epoc % 60 == 0) { minute_epoc++; }
 	/* get the current time */
 	get_time();
@@ -38,7 +39,7 @@ unsigned long returnSecondEpoc() {
 }
 unsigned long returnMinuteEpoc() {
 	return minute_epoc;
-} 
+}
 /* This will continuously loop until the given time has
 *  been reached */
 void timer_wait(int ticks)
@@ -46,6 +47,15 @@ void timer_wait(int ticks)
 	unsigned long eticks;
 	eticks = timer_ticks + ticks;
 	while(returnTimerTicks() < eticks) {
+		hlt();
+	}
+}/* This will continuously loop until the given time has
+*  been reached in seconds */
+void wait(int seconds)
+{
+	unsigned long esecs;
+	esecs = second_epoc + seconds;
+	while(returnSecondEpoc() < esecs) {
 		hlt();
 	}
 }/* This will continuously loop until the given time has
@@ -118,10 +128,10 @@ void get_time() {
 	uint8_t *month   = &current_time.month;
 	uint8_t *year    = &current_time.year;
 	//uint8_t *century = &current_time.century;
- 
+
 	// Note: This uses the "read registers until you get the same values twice in a row" technique
 	//       to avoid getting dodgy/inconsistent values due to RTC updates
- 
+
 	while (get_update_in_progress_flag());                // Make sure an update isn't in progress
 	*second = get_RTC_register(0x00);
 	*minute = get_RTC_register(0x02);
@@ -132,9 +142,9 @@ void get_time() {
 	/*if(century_register != 0) {
 		century = get_RTC_register(century_register);
 	}*/
- 
+
 	while( (last_second == *second) && (last_minute == *minute) && (last_hour == *hour) &&
-		(last_day == *day) && (last_month == *month) && (last_year == *year)) 
+		(last_day == *day) && (last_month == *month) && (last_year == *year))
 	{
 		last_second = *second;
 		last_minute = *minute;
@@ -143,7 +153,7 @@ void get_time() {
 		last_month = *month;
 		last_year = *year;
 		//last_century = century;
- 
+
 		while (get_update_in_progress_flag());           // Make sure an update isn't in progress
 		*second = get_RTC_register(0x00);
 		*minute = get_RTC_register(0x02);
@@ -156,11 +166,11 @@ void get_time() {
 		}*/
 	}
 		/*&& (last_century == century) */
- 
+
 	registerB = get_RTC_register(0x0B);
- 
+
 	// Convert BCD to binary values if necessary
- 
+
 	if (!(registerB & 0x04)) {
 		*second = (*second & 0x0F) + ((*second / 16) * 10);
 		*minute = (*minute & 0x0F) + ((*minute / 16) * 10);

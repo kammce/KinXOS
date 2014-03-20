@@ -16,7 +16,8 @@ extern char _ctype[];
 #define CT_SP	0x80	/* hard space (0x20) */
 
 #define isalnum(c)	((_ctype + 1)[(unsigned)(c)] & (CT_UP | CT_LOW | CT_DIG))
-#define isalpha(c)	((_ctype + 1)[(unsigned)(c)] & (CT_UP | CT_LOW))
+//#define isalpha(c)	((_ctype + 1)[(unsigned)(c)] & (CT_UP | CT_LOW))
+#define isalpha(c)	((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
 #define iscntrl(c)	((_ctype + 1)[(unsigned)(c)] & (CT_CTL))
 #define isdigit(c)	((_ctype + 1)[(unsigned)(c)] & (CT_DIG))
 #define isgraph(c)	((_ctype + 1)[(unsigned)(c)] & (CT_PUN | CT_UP | CT_LOW | CT_DIG))
@@ -32,8 +33,10 @@ extern char _ctype[];
 #define toupper(c)	(islower(c) ? c + 'A' - 'a' : c)
 #define cmp(c1, c2)	((c1 == c2) ? TRUE : FALSE)
 
-extern int strlen(const char *str);
-extern boolean strcompare (unsigned char * c1, unsigned char * c2);
-extern void itoa(char *_str, int num );
-extern void itoa2 (char *buf, int base, int d);
+int strlen(const char *str);
+boolean strcmp(char c1[], char c2[]);
+char * substr(char dest[], char src[], int start, int len);
+char * strcpy(char dest[], char src[]);
+char * strcat(char dest[], char src[]);
+
 #endif

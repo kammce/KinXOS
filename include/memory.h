@@ -1,16 +1,18 @@
-/* Desc: memory functions */
-
+/*
+ * MEMORY.C
+ * Desc: memory functions
+ */
 #ifndef __MEMORY_H
 #define __MEMORY_H
 
-/* MEMORY.C */
-extern void *memcpy(void *dest, const void *src, size_t count);
-extern void *memset(void *dest, char val, size_t count);
-unsigned char *memsetb(void *dest, char val, size_t count);
-extern unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count);
+#include <core.h>
 
-/* PHYS_MEMORY.C */
-extern multiboot_info_t *mbi;
-extern void physical_memory_manager_install();
+/* because C cannot overload */
+//void memcpy(void * dest, void * src, int start, int len);
+void memcpy(void * dest, void * src, int len);
+void memclr(void * addr, int length);
+void memset(void * dest, uint8_t value, int len);
+void memsetb(void *dest, char val, size_t count);
+void memsetw(unsigned short *dest, unsigned short val, size_t count);
 
 #endif

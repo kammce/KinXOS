@@ -15,6 +15,7 @@ typedef enum { false, true } boolean;
 #define NULL	 (void*)0
 #define TRUE     1
 #define FALSE    0
+//#define sizeof(type) (char *)(&type+1)-(char*)(&type)
 
 // Primitive typedef
 typedef signed char          int8_t;
@@ -26,12 +27,19 @@ typedef unsigned             uint32_t;
 typedef long long            int64_t;
 typedef unsigned long long   uint64_t;
 
-extern int counter_0;
-extern int counter_1;
-extern int counter_2;
-extern int counter_3;
-extern int counter_4;
-extern int counter_5;
+int counter_0;
+int counter_1;
+int counter_2;
+int counter_3;
+int counter_4;
+int counter_5;
+
+int _ecx0;
+int _ecx1;
+int _ecx2;
+int _ecx3;
+int _ecx4;
+int _ecx5;
 
 unsigned char global_keyboard_char;
 

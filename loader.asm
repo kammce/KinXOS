@@ -47,11 +47,11 @@ STACKSIZE equ 0x4000                    ; that's 16k.
 loader:
     mov  esp, stack + STACKSIZE         ; set up the stack
     ; Reset EFLAGS.
-    pushl   $0
-    popf
+    ;pushl   $0
+    ;popf
     ;mov  [MULTIBOOT_INFO_STRUCTURE], ebx
-    push ebx                            ; Multiboot info structure
-    push eax                            ; Multiboot magic number
+    ;push ebx                            ; Multiboot info structure
+    ;push eax                            ; Multiboot magic number
 
 	jmp loop_kernel
 

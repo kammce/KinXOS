@@ -112,7 +112,7 @@ void keyboard_handler(struct regs *r)
 		if(det_shift == 0) { global_keyboard_char = keymap[scancode]; }
 		if(det_shift == 1) { global_keyboard_char = shiftmap[scancode]; }
 		//putch(global_keyboard_char);
-		buffer_stack(global_keyboard_char);
+		bufferStack(global_keyboard_char);
 	}
 }
 

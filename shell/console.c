@@ -16,6 +16,7 @@ int attrib = 0xF0;
 int csr_x = 0, csr_y = 0;
 int prompt_limit = 0;
 char strnum[50];
+char blank_arg[] = "";
 
 void alter_pl(unsigned int pl) {
 	prompt_limit = pl;
@@ -60,8 +61,8 @@ void scroll(void)
 void create_titlebar(unsigned char colour)
 {
 	unsigned short *where;
-	for(counter_0 = 0; counter_0 < 120; counter_0++) {
-		where = textmemptr + counter_0;
+	for(_ecx0 = 0; _ecx0 < 120; _ecx0++) {
+		where = textmemptr + _ecx0;
 		*where = ' ' | (colour << 8);
 	}
 }
@@ -71,34 +72,31 @@ void write_titlebar(unsigned char *str, unsigned char colour)
 	unsigned short *where;
 	unsigned short new_x = 0;
 	unsigned short new_y = 0; //25 is the bottom of the 80x25 character matrix screen
-	for(counter_0 = 0; counter_0 < strlen(str); counter_0++) {
-		where = textmemptr + (new_y * 80 + (new_x+counter_0));
-		*where = str[counter_0] | (colour << 8);
+	for(_ecx0 = 0; _ecx0 < strlen(str); _ecx0++) {
+		where = textmemptr + (new_y * 80 + (new_x+_ecx0));
+		*where = str[_ecx0] | (colour << 8);
 	}
 }
 void create_actionbar(unsigned char colour)
 {
 	unsigned short *where;
-	for(counter_0 = 0; counter_0 < 120;counter_0++) {
-		where = textmemptr + (80*24) + counter_0;
+	for(_ecx0 = 0; _ecx0 < 120;_ecx0++) {
+		where = textmemptr + (80*24) + _ecx0;
 		*where = ' ' | (colour << 8);
 	}
 }
-void write_actionbar(unsigned char *str, unsigned char colour)
+void write_actionbar(char str[], unsigned char colour)
 {
-	unsigned short *where;
-	unsigned short new_x = 0;
-	unsigned short new_y = 24; //25 is the bottom of the 80x25 character matrix screen
-	unsigned char action[] = "STATUS:";
-	counter_1 = 0;
-	for(counter_0 = 0; counter_0 < strlen(action);counter_0++) {
-		where = textmemptr + (80*24) + counter_0;
-		*where = action[counter_0] | (colour << 8);
-		counter_1++;
+	uint16_t *where;
+	uint16_t new_x = 0;
+	uint16_t new_y = 24; //25 is the bottom of the 80x25 character matrix screen
+	for(_ecx0 = 0; str[_ecx0] != 0; _ecx0++) {
+		where = textmemptr + (80*24) + _ecx0;
+		*where = str[_ecx0] | (colour << 8);
 	}
-	for(counter_0 = counter_1+1; counter_0 < counter_1+1+strlen(str);counter_0++) {
-		where = textmemptr + (80*24) + counter_0;
-		*where = str[counter_0] | (colour << 8);
+	for(; _ecx0 < 80; _ecx0++) {
+		where = textmemptr + (80*24) + _ecx0;
+		*where = ' ' | (colour << 8);
 	}
 }
 
@@ -136,8 +134,8 @@ void ClearScreen()
 
 	/* Sets the entire screen to spaces in our current
 	*  color minus the title bar and the action bar*/
-	for(counter_0 = 1; counter_0 < 24; counter_0++) {
-		memsetw(textmemptr + counter_0 * 80, blank, 80);
+	for(_ecx0 = 1; _ecx0 < 24; _ecx0++) {
+		memsetw(textmemptr + _ecx0 * 80, blank, 80);
 	}
 
 	/* Update out virtual cursor, and then move the
@@ -154,8 +152,8 @@ void ClearShell()
 
 	/* Sets the entire screen to spaces in our current
 	*  color minus the title bar and the action bar*/
-	for(counter_0 = 1; counter_0 < 24; counter_0++) {
-		memsetw(textmemptr + counter_0 * 80, blank, 80);
+	for(_ecx0 = 1; _ecx0 < 24; _ecx0++) {
+		memsetw(textmemptr + _ecx0 * 80, blank, 80);
 	}
 
 	/* Update out virtual cursor, and then move the
@@ -226,10 +224,8 @@ void putch(unsigned char c)
 /* Uses the above routine to output a string... */
 void puts(unsigned char *text)
 {
-	for (counter_0 = 0; counter_0 < strlen(text); counter_0++)
-	{
-		if(text[counter_0] == '\0') { break; } else { putch(text[counter_0]); }
-	}
+	for (_ecx0 = 0; text[_ecx0] != 0; _ecx0++)
+	{ putch(text[_ecx0]); }
 }
 void puti( int num ) {
 	itoa(strnum, num);
@@ -283,7 +279,7 @@ void settextcolor(unsigned char color)
 
 void display_cursor_loc()
 {
-	puts("cursor-y: "); puti(csr_y); puts(" ::: "); puts("cursor-x: "); puti(csr_x);
+	printf("cursor-y: %d :: cursor-x: %d\n", csr_y, csr_x);
 }
 /* Sets our text-mode VGA pointer, then clears the screen for us */
 void init_video(void)

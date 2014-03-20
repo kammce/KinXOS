@@ -6,8 +6,13 @@
 /*unsigned char echo_buffer[100];
 unsigned short int new_line = 0;*/
 
-void echo (unsigned char *c1) {
-	puts(c1);
+void echo (uint8_t count, char * str[]) {
+	int i = 1;
+	for(;i < count; i++) {
+		puts(str[i]);
+		putch(' ');
+	}
+	putch('\n');
 }
 void output_ram() {
 	printf("Memory Size Lower = %d kb :: Memory Size Upper = %d kb\n",100, 10000);
