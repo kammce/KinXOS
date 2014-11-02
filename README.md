@@ -65,6 +65,24 @@ qemu -fda KinXOS.img
 ```
 if **qemu** is not available you can use **qemu-system-i386** instead.
 
+* Once in qemu, a grub prompt will appear.
+* Currently, to load the kernel do the following:
+
+```
+grub> root (fd0)
+grub> kernel 200+100
+grub> boot
+```
+
+```sh
+cd KinXOS
+make
+qemu -fda KinXOS.img
+```
+* After the splash screen you will be dumped into the KinShell.
+* Type "help" to see the command you can run... 
+* yes, those are the only ones... 
+* I am still working on it.
 
 License
 ----
