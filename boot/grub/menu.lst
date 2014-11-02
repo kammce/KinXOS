@@ -10,4 +10,4 @@ timeout 30
 # Entry 0:
 title   KinX OS
 root    (fd0)
-kernel  /boot/kernel.elf
+kernel  /boot/KinXOS.img

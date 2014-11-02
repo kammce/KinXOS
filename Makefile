@@ -21,23 +21,26 @@ SOURCES:=$(SOURCES) $(wildcard shell/*.c)
 SOURCES:=$(SOURCES) $(wildcard main/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 LOADER=boot/loader.o
-KERNEL=kernel.elf
-IMAGE=KinXOS.img
+KERNEL=KinXOS.elf
+IMAGE=KinXOS.flat.img
 
 all: $(SOURCES) $(IMAGE)
+
+color: CC=colorgcc
+color: $(SOURCES) $(IMAGE)
 
 # Generate Image
 $(IMAGE): $(KERNEL)
 	@echo 'Generating Image!'
-	cat boot/grub/stage1 boot/grub/stage2 boot/grub/pad kernel.elf > KinXOS.img
+	cat boot/grub/stage1 boot/grub/stage2 boot/grub/pad KinXOS.elf > KinXOS.flat.img
 	@echo 'Finished Operating System: $@'
 	@echo ' '
 	
 # Compile the Loader Assembly File
 $(KERNEL): $(LOADER) $(OBJECTS) 
-	@echo 'Linking Kernel into kernel.elf: $@'
+	@echo 'Linking Kernel into: $@'
 	@echo 'Invoking: LD'
-	ld -T linker.ld -melf_i386 -o kernel.elf $(LOADER) $(OBJECTS)
+	ld -T linker.ld -melf_i386 -o KinXOS.elf $(LOADER) $(OBJECTS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -57,4 +60,4 @@ $(LOADER):
 clean:
 	-@echo 'Removing all *.o files in directory'
 	rm $(OBJECTS)
-	rm kernel.elf
+	rm KinXOS.elf
