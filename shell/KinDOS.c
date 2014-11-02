@@ -29,6 +29,8 @@ void kinDOSInstall()
 	initKernelCmds();
 	waits(2);
 	ClearScreen();
+	alter_xy(0,0);
+	move_csr();
 	puts("\n\n\n\n\n\n\n\n");
 	puts("                  [*]--{---------}---------|| |------------[*] \n");
 	puts("                  [|]    || /  +           || |     _   _  [|]  \n");
@@ -116,6 +118,7 @@ void activateCMD() {
 	}
 	shell.cmdpos = 0;
 	shell.cmdbuffer[0] = 0;
+	putch('\n');
 	promptLine();
 }
 void updatePrompt(char * buff) {
