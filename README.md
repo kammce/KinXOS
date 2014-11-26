@@ -31,6 +31,7 @@ Kernel Wish List and TODO:
 #### KinSHELL
 * make an evironment variable system so programs can access their arguments from there.
 * allow KinDos to execute programs that are externel to Kernel. 
+* Add in Shell Scripting abilities.
 
 #### Create fully functioning DATE program.
 * ~~Can request CMOS date and time~~
