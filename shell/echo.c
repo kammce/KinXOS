@@ -58,7 +58,10 @@ void output_stats() {
 					(unsigned) mod->mod_start,
 					(unsigned) mod->mod_end,
 					(char *) mod->string);
+<<<<<<< HEAD
 			break;
+=======
+>>>>>>> 3ad6783003ce884e3769f43e453b1d7f103daa61
 		}
 	//}
 
