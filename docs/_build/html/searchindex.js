@@ -1,0 +1,1 @@
+Search.setIndex({docnames:["README","index"],envversion:52,filenames:["README.rst","index.rst"],objects:{},objnames:{},objtypes:{},terms:{doc:0,exampl:0,index:1,modul:1,page:1,search:1},titles:["&lt;no title&gt;","Welcome to KinXOS\u2019s documentation!"],titleterms:{document:1,indic:1,kinxo:1,tabl:1,welcom:1}})
