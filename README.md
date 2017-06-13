@@ -1,7 +1,7 @@
-[![Documentation Status](https://readthedocs.org/projects/kinxos/badge/?version=latest)](http://kinxos.readthedocs.io/en/latest/?badge=latest)
-
 KinXOS
 ======
+[![Documentation Status](https://readthedocs.org/projects/kinxos/badge/?version=latest)](http://kinxos.readthedocs.io/en/latest/?badge=latest)
+
 An experimental attempt at making a tiny operating system. The majority of the OS was developed using resources at:
 * [OS-Dev.org]
 * [BrokenThorn Entertainment]
