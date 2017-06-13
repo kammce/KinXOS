@@ -1,3 +1,4 @@
+[![Documentation Status](https://readthedocs.org/projects/kinxos/badge/?version=latest)](http://kinxos.readthedocs.io/en/latest/?badge=latest)
 
 KinXOS
 ======
